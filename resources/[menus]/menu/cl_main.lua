@@ -19,11 +19,11 @@ local array = {
     }
 
 local arrayIndex = 1
-local ped = PlayerPedId()
+
 
 
 function menu()
-
+local ped = PlayerPedId()
 
 Citizen.CreateThread(function()
     local menuTest = RageUI.CreateMenu("Main Menu", " ")
@@ -47,6 +47,7 @@ Citizen.CreateThread(function()
             RageUI.ButtonWithStyle("Repair","Repair the current vehicle", {RightLabel = "→"}, true, function(Hovered, Active, Selected)
                 if Selected then    
                     repairCar(ped)
+                    print(ped)
                 end
             end)  
 
@@ -69,7 +70,7 @@ end
 function spawnCar(vehicleName)
     local playerPed = PlayerPedId()
     local pos = GetEntityCoords(playerPed)
-    local vehicleId = GetVehiclePedIsIn(ped, false)
+    local vehicleId = GetVehiclePedIsIn(playerPed, false)
 
     if not IsModelInCdimage(vehicleName) or not IsModelAVehicle(vehicleName) then
         return
@@ -96,6 +97,9 @@ end
 function repairCar(ped)
     local vehicleId = GetVehiclePedIsIn(ped, false)
     print(vehicleId)
+
+    SetVehicleTyreFixed(vehicleId)
+    SetVehicleFixed(vehicleId)
     SetVehicleEngineHealth(vehicleId, 1000.0)
     SetVehicleDeformationFixed(vehicleId)
 end
